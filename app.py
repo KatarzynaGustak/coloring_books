@@ -13,6 +13,7 @@ import os
 
 #łączenie z kluczem OpenAi API 
 env = dotenv_values(".env")
+
 def get_openai_clients():
     return OpenAI(api_key=st.session_state["openai_api_key"])
 
