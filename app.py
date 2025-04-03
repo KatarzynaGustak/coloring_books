@@ -95,7 +95,7 @@ st.write("---")
 #wybór motywu
 motyw = st.selectbox(
     "Choose a Coloring Page Theme.",
-    ("Landscape", "Plants" ,"Animals" ,"Fantasy" ,"Fruits" ,"Vegetables" ,"Mandalas", "Architecture", "Underwater World", "Space", "Fairy Tales.")
+    ("Landscape", "Plants" ,"Animals" ,"Fantasy" ,"Fruits" ,"Vegetables" ,"Mandalas", "Architecture", "Underwater World", "Space", "Fairy Tales")
 )
 opis = st.text_input("Provide a short description of your future coloring page (optional):", "")
 
@@ -119,7 +119,7 @@ if st.button(":ok: Generate Coloring Page"):
             image_io = io.BytesIO(image_data)
             
             #wyświetlenie kolorowanki
-            st.image(image_io, caption=f"🎨 Coloring Page {i+1}", use_container_width=True)
+            st.image(image_io, caption=f"🎨 Coloring_Page_ {i+1}", use_container_width=True)
             st.download_button(
                 label=":arrow_down: Download the Coloring Page.",
                 data=image_data,
@@ -142,7 +142,7 @@ with st.sidebar:
     if selected_session:
         
         for i, url in enumerate(st.session_state["generated_images"][selected_session]):
-            st.image(url, caption=f"🎨  Coloring Page {i+1}", use_container_width=True)
+            st.image(url, caption=f"🎨  Coloring_Page_ {i+1}", use_container_width=True)
 
             # Przycisk pobrania dla wczytanych obrazów
             image_data = requests.get(url).content
