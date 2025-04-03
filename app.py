@@ -106,7 +106,7 @@ ilosc = st.select_slider(
      value=1
  )
 
-session_name = st.text_input("Save the coloring page under the name: 'Coloring_Page_" + motyw)
+session_name = st.text_input("Save the coloring page under the name: Coloring_Page_" + motyw)
 if st.button(":ok: Generate Coloring Page"):
     with st.spinner("Creating your coloring page! Please hold on..."):
         input_data = ColoringBookInput(motyw=motyw, opis=opis)
