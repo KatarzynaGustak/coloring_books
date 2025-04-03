@@ -119,7 +119,7 @@ if st.button(":ok: Generate Coloring Page"):
             image_io = io.BytesIO(image_data)
             
             #wyświetlenie kolorowanki
-            st.image(image_io, caption=f"🎨 Coloring_Page_ {i+1}", use_container_width=True)
+            st.image(image_io, caption=f"🎨 Coloring_Page_{i+1}", use_container_width=True)
             st.download_button(
                 label=":arrow_down: Download the Coloring Page.",
                 data=image_data,
@@ -142,7 +142,7 @@ with st.sidebar:
     if selected_session:
         
         for i, url in enumerate(st.session_state["generated_images"][selected_session]):
-            st.image(url, caption=f"🎨 Coloring_Page_ {i+1}", use_container_width=True)
+            st.image(url, caption=f"🎨 Coloring_Page_{i+1}", use_container_width=True)
 
             # Przycisk pobrania dla wczytanych obrazów
             image_data = requests.get(url).content
