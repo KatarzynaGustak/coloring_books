@@ -63,7 +63,7 @@ def generate_prompts(input_data:ColoringBookInput)-> ColoringBookPrompts:
     return response 
 
 #funkcja do generowania i pobierania kolorowanek
-def generate_image(prompt: str, session_name:str):
+def generate_image(prompt: str, session_name: str):
     response = instructor_openai_client.images.generate(
         model="dall-e-3",
         prompt=f"Line art style coloring book page: {prompt}",
@@ -94,7 +94,7 @@ st.write("---")
 
 #wybór motywu
 motyw = st.selectbox(
-    "Choose a Coloring Page Theme.",
+    "Choose a Coloring Page Theme:",
     ("Landscape", "Plants" ,"Animals" ,"Fantasy" ,"Fruits" ,"Vegetables" ,"Mandalas", "Architecture", "Underwater World", "Space", "Fairy Tales")
 )
 opis = st.text_input("Provide a short description of your future coloring page (optional):", "")
@@ -142,7 +142,7 @@ with st.sidebar:
     if selected_session:
         
         for i, url in enumerate(st.session_state["generated_images"][selected_session]):
-            st.image(url, caption=f"🎨  Coloring_Page_ {i+1}", use_container_width=True)
+            st.image(url, caption=f"🎨 Coloring_Page_ {i+1}", use_container_width=True)
 
             # Przycisk pobrania dla wczytanych obrazów
             image_data = requests.get(url).content
