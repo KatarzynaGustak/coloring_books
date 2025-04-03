@@ -22,8 +22,8 @@ if not st.session_state.get("openai_api_key"):
     if "OPENAI_API_KEY" in env: 
         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
     else: 
-        st.info("Dodaj swój klucz API OpenAI aby móc korzystać z tej aplikacji") 
-        st.session_state["openai_api_key"] = st.text_input("Klucz API", type="password")        
+        st.info("Add your OpenAI API key to be able to use this application") 
+        st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
         if st.session_state["openai_api_key"]: 
             st.rerun()
 if not st.session_state.get("openai_api_key"):
@@ -82,33 +82,33 @@ def generate_image(prompt: str, session_name:str):
 
 #strona głowna aplikacji
 
-st.header("Pokoloruj Twój Kreatywny Wzór")
+st.header("Color Your Creative Pattern")
 st.image("image.png",  use_container_width=True)
 
 st.write("---")
-st.markdown("Witaj w aplikacji do generowania kolorowanek." )  
-st.markdown("**Wybierz motyw kolorowanki,**  jaką chcesz dziś pokolorować i zanurz się w odprężającym malowaniu!"
-        " Możesz dodać opis dla dokładniejszego efektu lub poddać się _wyobraźni AI_.") 
-st.markdown("Kolorowanki dla dzieci i dorosłych.")
+st.markdown("Welcome to the Coloring Page Generator App." )  
+st.markdown("**Pick Your Perfect Coloring Theme!,**  _Immerse yourself in a relaxing painting experience!"
+        " You can add a description for a more detailed effect or let your imagination be guided by AI._") 
+st.markdown("Coloring Fun for Everyone!")
 st.write("---")
 
 #wybór motywu
 motyw = st.selectbox(
-    "Wybierz motyw kolorowanki",
-    ("Krajobraz", "Rośliny","Zwierzęta", "Fantastyka", "Owoce", "Warzywa", "Mandale","Architektura", "Morski świat", "Kosmos", "Bajki")
+    "Choose a Coloring Page Theme.",
+    ("Landscape," "Plants," "Animals," "Fantasy," "Fruits," "Vegetables," "Mandalas," "Architecture," "Underwater World," "Space," "Fairy Tales.")
 )
-opis = st.text_input("Podaj krótki opis przyszłej kolorowanki (opcionalnie):", "")
+opis = st.text_input("Provide a short description of your future coloring page (optional):", "")
 
 #wybór ilosci kolorowanek
 ilosc = st.select_slider(
-     "Wybierz liczbę kolorowanek do wygenerowania:",
+     "Choose the number of coloring pages to generate:",
      options=[1, 2, 3, 4, 5,6,7,8,9,10], 
      value=1
  )
 
-session_name = st.text_input("Zapisz kolorownkę pod nazwą:", "Kolorowanka_"+ motyw)
-if st.button(":ok: Generuj kolorowankę"):
-    with st.spinner("Twoja kolorowanka tworzy się! Proszę czekać..."):
+session_name = st.text_input("Save the coloring page under the name: 'Coloring_Page_"+ motyw)
+if st.button(":ok:Generate Coloring Page"):
+    with st.spinner("Creating your coloring page! Please hold on..."):
         input_data = ColoringBookInput(motyw=motyw, opis=opis)
         prompts = generate_prompts(input_data)
         
@@ -119,39 +119,39 @@ if st.button(":ok: Generuj kolorowankę"):
             image_io = io.BytesIO(image_data)
             
             #wyświetlenie kolorowanki
-            st.image(image_io, caption=f"🎨 Kolorowanka {i+1}", use_container_width=True)
+            st.image(image_io, caption=f"🎨 Coloring Page {i+1}", use_container_width=True)
             st.download_button(
-                label=":arrow_down: Pobierz kolorowankę",
+                label=":arrow_down: Download the Coloring Page.",
                 data=image_data,
                 file_name=f"{session_name}_{i+1}.png",
                 mime="image/png"
             )
     
-    if st.success("Twoje kolorowanki są gotowe! Miłej zabawy!"):
+    if st.success("Your coloring pages are ready! Enjoy coloring!"):
         st.balloons()
 
        
        
    # Historia sesji, pasek boczny
 with st.sidebar:
-    st.subheader("Zapisane kolorowanki")
+    st.subheader("Your Saved Coloring Pages.")
     selected_session=None
     if st.session_state["generated_images"]:
-        selected_session = st.selectbox("📂 Wybierz zapisaną kolorowankę", list(st.session_state["generated_images"].keys()))
+        selected_session = st.selectbox("📂 Select from Your Saved Coloring Pages.", list(st.session_state["generated_images"].keys()))
 
     if selected_session:
         
         for i, url in enumerate(st.session_state["generated_images"][selected_session]):
-            st.image(url, caption=f"🎨 Kolorowanka {i+1}", use_container_width=True)
+            st.image(url, caption=f"🎨  Coloring Page {i+1}", use_container_width=True)
 
             # Przycisk pobrania dla wczytanych obrazów
             image_data = requests.get(url).content
             st.download_button(
-                label=":arrow_down: Pobierz kolorowankę",
+                label=":arrow_down: Download the Coloring Page.",
                 data=image_data,
                 file_name=f"{selected_session}_{i+1}.png",
                 mime="image/png",
                 key=f"download_sidebar_{selected_session}_{i}"
             )
     else:
-        st.info("Brak zapisanych kolorowanek.")
+        st.info("No coloring pages saved")
