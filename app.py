@@ -87,15 +87,15 @@ st.image("image.png",  use_container_width=True)
 
 st.write("---")
 st.markdown("Welcome to the Coloring Page Generator App." )  
-st.markdown("**Pick Your Perfect Coloring Theme!,**  _Immerse yourself in a relaxing painting experience!"
-        " You can add a description for a more detailed effect or let your imagination be guided by AI._") 
+st.markdown("**Pick Your Perfect Coloring Theme!**  Immerse yourself in a relaxing painting experience!"
+        " You can add a description for a more detailed effect or let your imagination be guided by AI.") 
 st.markdown("Coloring Fun for Everyone!")
 st.write("---")
 
 #wybór motywu
 motyw = st.selectbox(
     "Choose a Coloring Page Theme.",
-    ("Landscape," "Plants," "Animals," "Fantasy," "Fruits," "Vegetables," "Mandalas," "Architecture," "Underwater World," "Space," "Fairy Tales.")
+    ("Landscape", "Plants" ,"Animals" ,"Fantasy" ,"Fruits" ,"Vegetables" ,"Mandalas", "Architecture", "Underwater World", "Space", "Fairy Tales.")
 )
 opis = st.text_input("Provide a short description of your future coloring page (optional):", "")
 
@@ -106,8 +106,8 @@ ilosc = st.select_slider(
      value=1
  )
 
-session_name = st.text_input("Save the coloring page under the name: 'Coloring_Page_"+ motyw)
-if st.button(":ok:Generate Coloring Page"):
+session_name = st.text_input("Save the coloring page under the name: 'Coloring_Page_" + motyw)
+if st.button(":ok: Generate Coloring Page"):
     with st.spinner("Creating your coloring page! Please hold on..."):
         input_data = ColoringBookInput(motyw=motyw, opis=opis)
         prompts = generate_prompts(input_data)
