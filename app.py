@@ -138,7 +138,7 @@ if st.button(":ok: Generate Coloring Page"):
        
    # Historia sesji, pasek boczny
 with st.sidebar:
-    st.subheader("Your Saved Coloring Pages.")
+    st.subheader("Your Saved Coloring Pages")
     selected_session=None
     if st.session_state["generated_images"]:
         selected_session = st.selectbox("📂 Select from Your Saved Coloring Pages.", list(st.session_state["generated_images"].keys()))
@@ -151,7 +151,7 @@ with st.sidebar:
             # Przycisk pobrania dla wczytanych obrazów
             image_data = requests.get(url).content
             st.download_button(
-                label=":arrow_down: Download the Coloring Page.",
+                label=":arrow_down: Download the Coloring Page",
                 data=image_data,
                 file_name=f"{selected_session}_{i+1}.png",
                 mime="image/png",
