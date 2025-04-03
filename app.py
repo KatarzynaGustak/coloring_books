@@ -10,27 +10,31 @@ from typing import List, Optional
 import io
 import os
 
-
-#łączenie z kluczem OpenAi API 
 env = dotenv_values(".env")
+openai_client = OpenAI(api_key=env["OPENAI_API_KEY"])
 
-def get_openai_clients():
-    return OpenAI(api_key=st.session_state["openai_api_key"])
+# #łączenie z kluczem OpenAi API 
+# env = dotenv_values(".env")
 
-# OpenAI API key protection
-if not st.session_state.get("openai_api_key"):
-    if "OPENAI_API_KEY" in env: 
-        st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
-    else: 
-        st.info("Add your OpenAI API key to be able to use this application") 
-        st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
-        if st.session_state["openai_api_key"]: 
-            st.rerun()
-if not st.session_state.get("openai_api_key"):
-    st.stop()
+# def get_openai_clients():
+#     return OpenAI(api_key=st.session_state["openai_api_key"])
 
-#połaczenie z instruktorem
-instructor_openai_client = instructor.from_openai(get_openai_clients()) 
+# # OpenAI API key protection
+# if not st.session_state.get("openai_api_key"):
+#     if "OPENAI_API_KEY" in env: 
+#         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
+#     else: 
+#         st.info("Add your OpenAI API key to be able to use this application") 
+#         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
+#         if st.session_state["openai_api_key"]: 
+#             st.rerun()
+# if not st.session_state.get("openai_api_key"):
+#     st.stop()
+
+# #połaczenie z instruktorem
+# instructor_openai_client = instructor.from_openai(get_openai_clients()) 
+
+instructor_openai_client = instructor.from_openai(openai_client()) 
 
 #zapisywanie wygenerowanej kolorowanki
 if "generated_images" not in st.session_state:
@@ -106,7 +110,7 @@ ilosc = st.select_slider(
      value=1
  )
 
-session_name = st.text_input("Save the coloring page under the name: Coloring_Page_" + motyw)
+session_name = st.text_input("Save the coloring page under the name-example: Coloring_Page_" + motyw)
 if st.button(":ok: Generate Coloring Page"):
     with st.spinner("Creating your coloring page! Please hold on..."):
         input_data = ColoringBookInput(motyw=motyw, opis=opis)
@@ -121,7 +125,7 @@ if st.button(":ok: Generate Coloring Page"):
             #wyświetlenie kolorowanki
             st.image(image_io, caption=f"🎨 Coloring_Page_{i+1}", use_container_width=True)
             st.download_button(
-                label=":arrow_down: Download the Coloring Page.",
+                label=":arrow_down: Download the Coloring Page",
                 data=image_data,
                 file_name=f"{session_name}_{i+1}.png",
                 mime="image/png"
