@@ -10,31 +10,30 @@ from typing import List, Optional
 import io
 import os
 
+
+
+ #łączenie z kluczem OpenAi API 
 env = dotenv_values(".env")
-openai_client = OpenAI(api_key=env["OPENAI_API_KEY"])
 
-# #łączenie z kluczem OpenAi API 
-# env = dotenv_values(".env")
+def get_openai_clients():
+     return OpenAI(api_key=st.session_state["openai_api_key"])
 
-# def get_openai_clients():
-#     return OpenAI(api_key=st.session_state["openai_api_key"])
-
-# # OpenAI API key protection
-# if not st.session_state.get("openai_api_key"):
-#     if "OPENAI_API_KEY" in env: 
-#         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
-#     else: 
-#         st.info("Add your OpenAI API key to be able to use this application") 
-#         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
-#         if st.session_state["openai_api_key"]: 
-#             st.rerun()
-# if not st.session_state.get("openai_api_key"):
-#     st.stop()
+ # OpenAI API key protection
+if not st.session_state.get("openai_api_key"):
+    if "OPENAI_API_KEY" in env: 
+        st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
+    else: 
+        st.info("Add your OpenAI API key to be able to use this application") 
+        st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
+        if st.session_state["openai_api_key"]: 
+            st.rerun()
+if not st.session_state.get("openai_api_key"):
+    st.stop()
 
 # #połaczenie z instruktorem
-# instructor_openai_client = instructor.from_openai(get_openai_clients()) 
+instructor_openai_client = instructor.from_openai(get_openai_clients()) 
 
-instructor_openai_client = instructor.from_openai(openai_client()) 
+
 
 #zapisywanie wygenerowanej kolorowanki
 if "generated_images" not in st.session_state:
