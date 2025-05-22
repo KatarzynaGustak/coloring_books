@@ -162,11 +162,13 @@ with st.sidebar:
     else:
         st.info("No coloring pages saved")
     
-    st.markdown("""
+with st.sidebar:
+    st.markdown(f"""
 <a href="{buy_me_a_coffee_url}" target="_blank">
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;">
 </a>
 """, unsafe_allow_html=True)
+
     
 
 
