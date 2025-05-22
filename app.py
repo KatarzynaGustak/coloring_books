@@ -13,27 +13,30 @@ import os
 
 
  #łączenie z kluczem OpenAi API 
-env = dotenv_values(".env")
+# env = dotenv_values(".env")
 
 def get_openai_clients():
-     return OpenAI(api_key=st.session_state["openai_api_key"])
+     return OpenAI(api_key=st.secrets["OPENAI_API_KEY"] )
 
  # OpenAI API key protection
-if not st.session_state.get("openai_api_key"):
-    if "OPENAI_API_KEY" in env: 
-        st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
-    else: 
-        st.info("Add your OpenAI API key to be able to use this application") 
-        st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
-        if st.session_state["openai_api_key"]: 
-            st.rerun()
-if not st.session_state.get("openai_api_key"):
-    st.stop()
+# if not st.session_state.get("openai_api_key"):
+#     if "OPENAI_API_KEY" in env: 
+#         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
+#     else: 
+#         st.info("Add your OpenAI API key to be able to use this application") 
+#         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
+#         if st.session_state["openai_api_key"]: 
+#             st.rerun()
+# if not st.session_state.get("openai_api_key"):
+#     st.stop()
+
+
 
 # #połaczenie z instruktorem
 instructor_openai_client = instructor.from_openai(get_openai_clients()) 
 
-
+#łączenie z BMaC
+buy_me_a_coffee_url = st.secrets["buy_me_a_coffee"]["url"]
 
 #zapisywanie wygenerowanej kolorowanki
 if "generated_images" not in st.session_state:
@@ -158,3 +161,15 @@ with st.sidebar:
             )
     else:
         st.info("No coloring pages saved")
+    
+    st.markdown("""
+<a href="{buy_me_a_coffee_url}" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;">
+</a>
+""", unsafe_allow_html=True)
+    
+
+
+st.markdown("---")
+
+st.markdown("🎨 Color Your Creative Pattern -- Create and color unique AI-generated patterns!")

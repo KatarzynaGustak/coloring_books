@@ -1,3 +1,4 @@
 .env
 appss.py
 appv0.py
+.streamlit/secrets.toml
