@@ -13,22 +13,22 @@ import os
 
 
  #łączenie z kluczem OpenAi API 
-# env = dotenv_values(".env")
+env = dotenv_values(".env")
 
 def get_openai_clients():
-     return OpenAI(api_key=st.secrets["OPENAI_API_KEY"] )
+     return OpenAI(api_key=st.session_state["openai_api_key"])
 
  # OpenAI API key protection
-# if not st.session_state.get("openai_api_key"):
-#     if "OPENAI_API_KEY" in env: 
-#         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
-#     else: 
-#         st.info("Add your OpenAI API key to be able to use this application") 
-#         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
-#         if st.session_state["openai_api_key"]: 
-#             st.rerun()
-# if not st.session_state.get("openai_api_key"):
-#     st.stop()
+if not st.session_state.get("openai_api_key"):
+     if "OPENAI_API_KEY" in env: 
+        st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
+     else: 
+         st.info("Add your OpenAI API key to be able to use this application") 
+         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
+         if st.session_state["openai_api_key"]: 
+             st.rerun()
+if not st.session_state.get("openai_api_key"):
+     st.stop()
 
 
 
