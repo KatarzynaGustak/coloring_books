@@ -13,22 +13,22 @@ import os
 
 
  #łączenie z kluczem OpenAi API 
-env = dotenv_values(".env")
+#env = dotenv_values(".env")
 
 def get_openai_clients():
-     return OpenAI(api_key=st.session_state["openai_api_key"])
+    return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
  # OpenAI API key protection
-if not st.session_state.get("openai_api_key"):
-     if "OPENAI_API_KEY" in env: 
-        st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
-     else: 
-         st.info("Add your OpenAI API key to be able to use this application") 
-         st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
-         if st.session_state["openai_api_key"]: 
-             st.rerun()
-if not st.session_state.get("openai_api_key"):
-     st.stop()
+# if not st.session_state.get("openai_api_key"):
+#      if "OPENAI_API_KEY" in env: 
+#         st.session_state["openai_api_key"] = env["OPENAI_API_KEY"]
+#      else: 
+#          st.info("Add your OpenAI API key to be able to use this application") 
+#          st.session_state["openai_api_key"] = st.text_input("Key API", type="password")        
+#          if st.session_state["openai_api_key"]: 
+#              st.rerun()
+# if not st.session_state.get("openai_api_key"):
+#      st.stop()
 
 
 
@@ -88,14 +88,14 @@ def generate_image(prompt: str, session_name: str):
 
 #strona głowna aplikacji
 
-st.header("Color Your Creative Pattern")
+st.header("🎨 Color Your Creative Pattern")
 st.image("image.png",  use_container_width=True)
 
 st.write("---")
 st.markdown("Welcome to the Coloring Page Generator App." )  
 st.markdown("**Pick Your Perfect Coloring Theme!**  Immerse yourself in a relaxing painting experience!"
         " You can add a description for a more detailed effect or let your imagination be guided by AI.") 
-st.markdown("Coloring Fun for Everyone!")
+st.markdown("Coloring Fun for Everyone! 🖌️")
 st.write("---")
 
 #wybór motywu
@@ -133,14 +133,14 @@ if st.button(":ok: Generate Coloring Page"):
                 mime="image/png"
             )
     
-    if st.success("Your coloring pages are ready! Enjoy coloring!"):
+    if st.success("✅ Your coloring pages are ready! Enjoy coloring!"):
         st.balloons()
 
        
        
    # Historia sesji, pasek boczny
 with st.sidebar:
-    st.subheader("Your Saved Coloring Pages")
+    st.subheader("📂 Your Saved Coloring Pages")
     selected_session=None
     if st.session_state["generated_images"]:
         selected_session = st.selectbox("📂 Select from Your Saved Coloring Pages.", list(st.session_state["generated_images"].keys()))
